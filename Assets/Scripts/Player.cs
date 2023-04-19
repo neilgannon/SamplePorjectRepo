@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
         }
 
         //Limit the velocity of the player to be MaxMovementSpeed
-        body.velocity = Vector2.ClampMagnitude(body.velocity, MaxMovementSpeed);
+        body.velocity =new Vector2(Mathf.Clamp(body.velocity.x, -MaxMovementSpeed, MaxMovementSpeed), body.velocity.y);
     }
 
     bool CanJump()
