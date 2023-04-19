@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
         }
 
         //Limit the velocity of the player to be MaxMovementSpeed
-        body.velocity = Vector2.ClampMagnitude(body.velocity, MaxMovementSpeed);
+        body.velocity =new Vector2(Mathf.Clamp(body.velocity.x, -MaxMovementSpeed, MaxMovementSpeed), body.velocity.y);
     }
 
     bool CanJump()
@@ -88,9 +88,19 @@ public class Player : MonoBehaviour
         return isOnGround || currentJumps < MaxJumps;
     }
 
+    void ResetToCheckpoint()
+    {
+        transform.position = checkpointPosition;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         CheckIfOnGround(collision);
+
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            ResetToCheckpoint();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
