@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 5879596842555728752}
   - component: {fileID: 5879596842555728767}
   - component: {fileID: 5879596842555728755}
-  m_Layer: 0
+  - component: {fileID: -8612501354470323266}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -116,10 +117,10 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_GravityScale: 1.2
+  m_Material: {fileID: 6200000, guid: c65f25e133e9bc34a9ff86679eec0f40, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -143,4 +144,17 @@ MonoBehaviour:
   MaxSlope: 0.5
   MaxJumps: 2
   CollectableCount: 0
-  MaxMovementSpeed: 10
+  MaxMovementSpeed: 20
+--- !u!114 &-8612501354470323266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5879596842555728766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a71e92bd4359c394fa936b0ec7ad6ee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CustomCursorImage: {fileID: 2800000, guid: 5aa56704f3c702c419a25523b3de26d0, type: 3}

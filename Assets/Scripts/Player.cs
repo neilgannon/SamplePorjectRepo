@@ -88,9 +88,19 @@ public class Player : MonoBehaviour
         return isOnGround || currentJumps < MaxJumps;
     }
 
+    void ResetToCheckpoint()
+    {
+        transform.position = checkpointPosition;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         CheckIfOnGround(collision);
+
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            ResetToCheckpoint();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
