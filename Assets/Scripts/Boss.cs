@@ -19,20 +19,12 @@ public class Boss : MonoBehaviour
     string defaultState = "Default";
     bool hasJustMadeMove = false;
 
-    //Player must destroy parts in the order of Arms -> Body -> Head
-    [Header("Body Parts")]
-    public BossBodyPart Head;
-    public BossBodyPart Body;
-    public BossBodyPart LeftArm;
-    public BossBodyPart RightArm;
-    public BossFightState CurrentBodyState;
-
     void Start()
     {
-        InvokeRepeating("PickRandomMove", timeBetweenMoves, timeBetweenMoves);
+        InvokeRepeating("PickNextMove", timeBetweenMoves, timeBetweenMoves);
     }
 
-    void PickRandomMove()
+    void PickNextMove()
     {
         if (!hasJustMadeMove)
         {
@@ -41,6 +33,7 @@ public class Boss : MonoBehaviour
 
             animator.Play(possibleBossMoves[currentMove].name);
             currentMove++;
+
             hasJustMadeMove = true;
 
             UpdateBoss();
@@ -54,38 +47,27 @@ public class Boss : MonoBehaviour
 
     public void UpdateBoss()
     {
-        string moveName = possibleBossMoves[currentMove].name;
-
-        if(moveName == "ArmSwing")
+        if (currentMove < possibleBossMoves.Length)
         {
+            string moveName = possibleBossMoves[currentMove].name;
 
-        }
-        else if(moveName == "ArmSlam")
-        {
+            if (moveName == "ArmSwing")
+            {
 
-        }
-        else if(moveName == "BodySlam")
-        {
+            }
+            else if (moveName == "ArmSlam")
+            {
 
+            }
+            else if (moveName == "BodySlam")
+            {
+
+            }
         }
     }
 
     private void Update()
     {
-        switch (CurrentBodyState)
-        {
-            case BossFightState.AttackingArms:
-                LeftArm.canBeDamaged = true;
-                RightArm.canBeDamaged = true;
-                break;
 
-            case BossFightState.AttackingBody:
-                Body.canBeDamaged = true;
-                break;
-
-            case BossFightState.AttackingHead:
-                Head.canBeDamaged = true;
-                break;
-        }
     }
 }
