@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
     public float MaxMovementSpeed = 10;
+    float vertical;
+    public bool doesWantToDropDown = false;
 
     void Start()
     {
@@ -37,6 +39,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        #region Movement
         horizontal = Input.GetAxisRaw("Horizontal");
 
         if (isOnGround)
@@ -81,16 +84,41 @@ public class Player : MonoBehaviour
 
         //Limit the velocity of the player to be MaxMovementSpeed
         body.velocity =new Vector2(Mathf.Clamp(body.velocity.x, -MaxMovementSpeed, MaxMovementSpeed), body.velocity.y);
+        #endregion
+
+        vertical = Input.GetAxisRaw("Vertical");
+
+        if(vertical < 0)
+        {
+            doesWantToDropDown = true;
+        }
+        else
+        {
+            doesWantToDropDown = false;
+        }
     }
 
-    bool CanJump()
+
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        return isOnGround || currentJumps < MaxJumps;
+        if (collision.gameObject.CompareTag("Stairs"))
+        {
+            if (doesWantToDropDown)
+            {
+                 if(collision.gameObject.GetComponent<PlatformEffector2D>())
+                {
+                    collision.collider.isTrigger = true;
+                }
+            }
+        }
     }
 
-    void ResetToCheckpoint()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        transform.position = checkpointPosition;
+        if (collision.gameObject.CompareTag("Stairs"))
+        {
+            collision.isTrigger = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -106,6 +134,16 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
+    }
+
+    bool CanJump()
+    {
+        return isOnGround || currentJumps < MaxJumps;
+    }
+
+    void ResetToCheckpoint()
+    {
+        transform.position = checkpointPosition;
     }
 
     void CheckIfOnGround(Collision2D collision)
